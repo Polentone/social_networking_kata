@@ -11,17 +11,29 @@ public class CommandExecutor implements Executor {
 
     @Override
     public void execute(String command) {
-        if (command.contains(" -> ")) {
+        if (isPostCommand(command)) {
             String[] split = command.split(" -> ");
             posts.post(split[0], split[1]);
-        } else if (command.contains(" follows ")) {
+        } else if (isFollowCommand(command)) {
             String[] split = command.split(" follows ");
             posts.follows(split[0], split[1]);
-        } else if (command.contains(" wall")) {
+        } else if (isWallCommand(command)) {
             String[] split = command.split(" wall");
             posts.wall(split[0]);
         } else {
             posts.read(command);
         }
+    }
+
+    private boolean isWallCommand(String command) {
+        return command.contains(" wall");
+    }
+
+    private boolean isFollowCommand(String command) {
+        return command.contains(" follows ");
+    }
+
+    private boolean isPostCommand(String command) {
+        return command.contains(" -> ");
     }
 }
