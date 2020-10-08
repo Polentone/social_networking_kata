@@ -51,3 +51,13 @@ Implement a console-based social networking application (similar to Twitter) sat
 **IMPORTANT:**  Implement the requirements focusing on **writing the best code** you can produce.
 
 **CODE SUBMISSION:** Add the code to your own Github account and send us the link.
+
+### For running the application
+
+I used java 11 and Maven
+
+For running the tests use ```mvn clean test```
+
+For creating the jar use ```mvn clean package```
+
+For executing the program use ```java -jar target/social_networking_kata-1.0-SNAPSHOT-jar-with-dependencies.jar``` after packaging
