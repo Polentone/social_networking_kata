@@ -11,6 +11,11 @@ public class CommandExecutor implements Executor {
 
     @Override
     public void execute(String command) {
-        posts.read(command);
+        if (command.contains(" -> ")) {
+            String[] split = command.split(" -> ");
+            posts.post(split[0], split[1]);
+        } else {
+            posts.read(command);
+        }
     }
 }
