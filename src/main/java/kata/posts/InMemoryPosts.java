@@ -1,10 +1,14 @@
 package kata.posts;
 
+
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 public class InMemoryPosts implements Posts {
+    Map<String, String> followers = new HashMap<>();
     List<Post> posts = new ArrayList<>();
 
     @Override
@@ -22,11 +26,13 @@ public class InMemoryPosts implements Posts {
 
     @Override
     public void follows(String follower, String user) {
-
+        followers.put(follower, user);
     }
 
     @Override
     public List<String> wall(String user) {
-        return null;
+        return posts.stream().filter(p -> user.equals(p.username()) || p.username().equals(followers.get(user)))
+                .map(Post::message)
+                .collect(Collectors.toList());
     }
 }

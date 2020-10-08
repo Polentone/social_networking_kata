@@ -61,4 +61,17 @@ class InMemoryPostsTest {
 
         assertThat(messages).hasSize(0);
     }
+
+    @Test
+    void when_user_follow_another_then_wall_gives_back_both_their_posts() {
+        posts.post(USERNAME, MESSAGE);
+        posts.post(ANOTHER_USERNAME, ANOTHER_MESSAGE);
+        posts.follows(USERNAME, ANOTHER_USERNAME);
+
+        List<String> wall = posts.wall(USERNAME);
+
+        assertThat(wall).hasSize(2);
+        assertThat(wall.get(0)).isEqualTo(MESSAGE);
+        assertThat(wall.get(1)).isEqualTo(ANOTHER_MESSAGE);
+    }
 }
