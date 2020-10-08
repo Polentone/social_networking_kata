@@ -19,4 +19,14 @@ public class InMemoryPosts implements Posts {
                 .map(Post::message)
                 .collect(Collectors.toList());
     }
+
+    @Override
+    public void follows(String follower, String user) {
+
+    }
+
+    @Override
+    public List<String> wall(String user) {
+        return null;
+    }
 }

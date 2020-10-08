@@ -31,4 +31,18 @@ class CommandExecutorTest {
 
         verify(posts).post("Alice", "I love the weather today");
     }
+
+    @Test
+    void when_requesting_following_then_following_is_called() {
+        executor.execute("Alice follows Bobby");
+
+        verify(posts).follows("Alice", "Bobby");
+    }
+
+    @Test
+    void when_requesting_wall_of_a_user_then_wall_is_called() {
+        executor.execute("Alice wall");
+
+        verify(posts).wall("Alice");
+    }
 }
