@@ -3,6 +3,7 @@ package kata.posts;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 public class InMemoryPosts implements Posts {
@@ -17,7 +18,7 @@ public class InMemoryPosts implements Posts {
     @Override
     public List<String> read(String username) {
         return posts.stream()
-                .filter(p -> username.equals(p.username()))
+                .filter(hasUserPostMessage(username))
                 .map(Post::message)
                 .collect(Collectors.toList());
     }
@@ -30,11 +31,22 @@ public class InMemoryPosts implements Posts {
     @Override
     public List<String> wall(String user) {
         return posts.stream()
-                .filter(p -> user.equals(p.username()) ||
-                                followers.stream().filter(f -> f.follower().equals(user))
-                                        .anyMatch(f -> p.username().equals(f.user())))
+                .filter(hasUserPostMessageOrFollowsTheOneThatPostedIt(user))
                 .map(Post::message)
                 .collect(Collectors.toList());
     }
 
+    private Predicate<Post> hasUserPostMessage(String username) {
+        return post -> username.equals(post.username());
+    }
+
+    private Predicate<Post> hasUserPostMessageOrFollowsTheOneThatPostedIt(String user) {
+        return post -> user.equals(post.username()) ||
+                followTheOneThatPostedIt(user, post);
+    }
+
+    private boolean followTheOneThatPostedIt(String user, Post post) {
+        return followers.stream().filter(f -> f.follower().equals(user))
+                .anyMatch(f -> post.username().equals(f.user()));
+    }
 }
