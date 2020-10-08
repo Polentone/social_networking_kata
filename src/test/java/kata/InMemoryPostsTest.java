@@ -31,7 +31,7 @@ class InMemoryPostsTest {
         List<String> messages = posts.read(USERNAME);
 
         assertThat(messages).hasSize(1);
-        assertThat(messages.get(0)).isEqualTo(MESSAGE);
+        assertThat(messages.get(0)).startsWith(MESSAGE);
     }
 
     @Test
@@ -42,8 +42,8 @@ class InMemoryPostsTest {
         List<String> messages = posts.read(USERNAME);
 
         assertThat(messages).hasSize(2);
-        assertThat(messages.get(0)).isEqualTo(MESSAGE);
-        assertThat(messages.get(1)).isEqualTo(ANOTHER_MESSAGE);
+        assertThat(messages.get(0)).startsWith(ANOTHER_MESSAGE);
+        assertThat(messages.get(1)).startsWith(MESSAGE);
     }
 
     @Test
@@ -54,7 +54,7 @@ class InMemoryPostsTest {
         List<String> messages = posts.read(USERNAME);
 
         assertThat(messages).hasSize(1);
-        assertThat(messages.get(0)).isEqualTo(MESSAGE);
+        assertThat(messages.get(0)).startsWith(MESSAGE);
     }
 
     @Test
@@ -73,8 +73,8 @@ class InMemoryPostsTest {
         List<String> wall = posts.wall(USERNAME);
 
         assertThat(wall).hasSize(2);
-        assertThat(wall.get(0)).isEqualTo(MESSAGE);
-        assertThat(wall.get(1)).isEqualTo(ANOTHER_MESSAGE);
+        assertThat(wall.get(0)).startsWith(ANOTHER_USERNAME + " - " + ANOTHER_MESSAGE);
+        assertThat(wall.get(1)).startsWith(USERNAME + " - " + MESSAGE);
     }
 
     @Test
@@ -88,8 +88,8 @@ class InMemoryPostsTest {
         List<String> wall = posts.wall(USERNAME);
 
         assertThat(wall).hasSize(3);
-        assertThat(wall.get(0)).isEqualTo(MESSAGE);
-        assertThat(wall.get(1)).isEqualTo(ANOTHER_MESSAGE);
-        assertThat(wall.get(2)).isEqualTo(THIRD_MESSAGE);
+        assertThat(wall.get(0)).startsWith(THIRD_USERNAME + " - " + THIRD_MESSAGE);
+        assertThat(wall.get(1)).startsWith(ANOTHER_USERNAME + " - " + ANOTHER_MESSAGE);
+        assertThat(wall.get(2)).startsWith(USERNAME + " - " + MESSAGE);
     }
 }

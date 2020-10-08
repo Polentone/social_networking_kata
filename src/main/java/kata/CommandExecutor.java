@@ -19,9 +19,9 @@ public class CommandExecutor implements Executor {
             posts.follows(split[0], split[1]);
         } else if (isWallCommand(command)) {
             String[] split = command.split(" wall");
-            posts.wall(split[0]);
+            posts.wall(split[0]).forEach(System.out::println);
         } else {
-            posts.read(command);
+            posts.read(command).forEach(System.out::println);
         }
     }
 

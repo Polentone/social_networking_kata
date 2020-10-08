@@ -2,6 +2,7 @@ package kata.posts;
 
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
@@ -12,14 +13,14 @@ public class InMemoryPosts implements Posts {
 
     @Override
     public void post(String username, String message) {
-        posts.add(new Post(username, message));
+        posts.add(0, new Post(username, message, new Date()));
     }
 
     @Override
     public List<String> read(String username) {
         return posts.stream()
                 .filter(hasUserPostMessage(username))
-                .map(Post::message)
+                .map(Post::formatMessageForRead)
                 .collect(Collectors.toList());
     }
 
@@ -32,7 +33,7 @@ public class InMemoryPosts implements Posts {
     public List<String> wall(String user) {
         return posts.stream()
                 .filter(hasUserPostMessageOrFollowsTheOneThatPostedIt(user))
-                .map(Post::message)
+                .map(Post::formatMessageForWall)
                 .collect(Collectors.toList());
     }
 
