@@ -14,6 +14,8 @@ class InMemoryPostsTest {
     public static final String ANOTHER_USERNAME = "Bobby";
     public static final String MESSAGE = "I love the weather today";
     public static final String ANOTHER_MESSAGE = "even though it's raining";
+    public static final String THIRD_USERNAME = "Gianni";
+    public static final String THIRD_MESSAGE = "Third message";
 
     private Posts posts;
 
@@ -73,5 +75,21 @@ class InMemoryPostsTest {
         assertThat(wall).hasSize(2);
         assertThat(wall.get(0)).isEqualTo(MESSAGE);
         assertThat(wall.get(1)).isEqualTo(ANOTHER_MESSAGE);
+    }
+
+    @Test
+    void when_an_user_follow_other_two_then_wall_display_all_their_messages() {
+        posts.post(USERNAME, MESSAGE);
+        posts.post(ANOTHER_USERNAME, ANOTHER_MESSAGE);
+        posts.post(THIRD_USERNAME, THIRD_MESSAGE);
+        posts.follows(USERNAME, ANOTHER_USERNAME);
+        posts.follows(USERNAME, THIRD_USERNAME);
+
+        List<String> wall = posts.wall(USERNAME);
+
+        assertThat(wall).hasSize(3);
+        assertThat(wall.get(0)).isEqualTo(MESSAGE);
+        assertThat(wall.get(1)).isEqualTo(ANOTHER_MESSAGE);
+        assertThat(wall.get(2)).isEqualTo(THIRD_MESSAGE);
     }
 }
