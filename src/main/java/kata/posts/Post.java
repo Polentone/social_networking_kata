@@ -1,4 +1,4 @@
-package kata;
+package kata.posts;
 
 public class Post {
     private final String username;

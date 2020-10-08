@@ -1,4 +1,4 @@
-package kata;
+package kata.posts;
 
 import java.util.List;
 

@@ -1,5 +1,7 @@
 package kata;
 
+import kata.posts.InMemoryPosts;
+import kata.posts.Posts;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
